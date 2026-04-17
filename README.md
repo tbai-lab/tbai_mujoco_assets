@@ -34,5 +34,5 @@ for g in libero dimos; do
       -cf - "$g" | gzip -n > "dist/$g.tar.gz"
 done
 sha256sum dist/*.tar.gz
-gh release create assets-v0.1.0 dist/*.tar.gz
+gh release create assets-v0.1.1 dist/*.tar.gz
 ```

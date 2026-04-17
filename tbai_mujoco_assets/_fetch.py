@@ -23,7 +23,7 @@ import urllib.request
 from dataclasses import dataclass
 from pathlib import Path
 
-_ASSETS_RELEASE_TAG = "assets-v0.1.0"
+_ASSETS_RELEASE_TAG = "assets-v0.1.1"
 _ASSETS_BASE_URL = (
     f"https://github.com/tbai-lab/tbai_mujoco_assets/releases/download/{_ASSETS_RELEASE_TAG}"
 )
@@ -44,12 +44,12 @@ MANIFEST: dict[str, _GroupSpec] = {
     "libero": _GroupSpec(
         name="libero",
         archive="libero.tar.gz",
-        sha256="ec0954a2b46155310afd49a9d377acb2c0d7ab4296ac0b9a0bbedc2516a21328",
+        sha256="6e3bd4c6e9496fe559fd511c4275df87cf2d85a10e65ddd22e8231d39d45b67f",
     ),
     "dimos": _GroupSpec(
         name="dimos",
         archive="dimos.tar.gz",
-        sha256="58d1a809ef53e0546f87dd0e94c6984171b28431f0ad80199ac8db120a4dfc02",
+        sha256="2a9cd92956b4da8acc6ab179473ebdbea60392fdc7ee43967f27b704eeae6ab9",
     ),
 }
 
