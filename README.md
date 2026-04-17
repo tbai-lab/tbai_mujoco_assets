@@ -19,7 +19,7 @@ tbai-mujoco-assets list                        # show which groups are cached
 tbai-mujoco-assets fetch libero                # prefetch (also: dimos, --all, --force)
 ```
 
-Tarballs are pulled from this repo's GitHub Releases into `$XDG_CACHE_HOME/tbai_mujoco_assets/worlds/`.
+Tarballs are pulled from this repo's GitHub Releases into `$XDG_CACHE_HOME/tbai_mujoco_assets/worlds/` (generally `~/.cache/tbai_mujoco_assets/worlds/`).
 
 ## Maintainers: cutting a release
 
