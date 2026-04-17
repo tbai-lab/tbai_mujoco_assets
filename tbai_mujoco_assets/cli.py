@@ -5,6 +5,8 @@ Usage
     tbai-mujoco-assets fetch libero dimos
     tbai-mujoco-assets fetch --all
     tbai-mujoco-assets list
+    tbai-mujoco-assets list-worlds
+    tbai-mujoco-assets list-robots
 """
 
 from __future__ import annotations
@@ -47,6 +49,39 @@ def _cmd_list(_args: argparse.Namespace) -> int:
     return 0
 
 
+def _cmd_list_worlds(args: argparse.Namespace) -> int:
+    from tbai_mujoco_assets import list_worlds
+
+    if args.fetch:
+        for group in _fetch.GROUPS:
+            _fetch.ensure_group(group)
+    worlds = list_worlds()
+    if not worlds:
+        print(
+            "no worlds found locally. Run `tbai-mujoco-assets fetch --all` first "
+            "or re-run with `--fetch`.",
+            file=sys.stderr,
+        )
+        return 1
+    for world in worlds:
+        print(world)
+    return 0
+
+
+def _cmd_list_robots(_args: argparse.Namespace) -> int:
+    try:
+        import tbai_mujoco_descriptions as desc
+    except ImportError:
+        print(
+            "error: tbai_mujoco_descriptions is not installed.",
+            file=sys.stderr,
+        )
+        return 1
+    for robot in desc.AVAILABLE_ROBOTS:
+        print(robot)
+    return 0
+
+
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(prog="tbai-mujoco-assets")
     sub = parser.add_subparsers(dest="cmd", required=True)
@@ -59,6 +94,17 @@ def main(argv: list[str] | None = None) -> int:
 
     p_list = sub.add_parser("list", help="show which groups are available locally")
     p_list.set_defaults(func=_cmd_list)
+
+    p_worlds = sub.add_parser("list-worlds", help="list worlds available locally")
+    p_worlds.add_argument(
+        "--fetch", action="store_true", help="fetch all groups first"
+    )
+    p_worlds.set_defaults(func=_cmd_list_worlds)
+
+    p_robots = sub.add_parser(
+        "list-robots", help="list robots available via tbai_mujoco_descriptions"
+    )
+    p_robots.set_defaults(func=_cmd_list_robots)
 
     args = parser.parse_args(argv)
     return args.func(args)
