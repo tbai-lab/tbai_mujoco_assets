@@ -139,7 +139,7 @@ def _download_and_extract(spec: _GroupSpec, dest: Path) -> None:
         tmp_path = Path(tmp)
         archive = tmp_path / spec.archive
         with urllib.request.urlopen(spec.url) as resp, archive.open("wb") as f:
-            shutil.copyfileobj(resp, f)
+            _copy_with_progress(resp, f, spec.archive)
         if spec.sha256:
             actual = _sha256(archive)
             if actual != spec.sha256:
@@ -161,6 +161,24 @@ def _download_and_extract(spec: _GroupSpec, dest: Path) -> None:
         if dest.exists():
             shutil.rmtree(dest)
         shutil.move(str(payload), str(dest))
+
+
+def _copy_with_progress(resp, dst, label: str, chunk: int = 1 << 16) -> None:
+    total = resp.length  # None if Content-Length absent
+    try:
+        from tqdm import tqdm
+    except ImportError:
+        shutil.copyfileobj(resp, dst)
+        return
+    with tqdm(
+        total=total, unit="B", unit_scale=True, unit_divisor=1024, desc=label
+    ) as bar:
+        while True:
+            buf = resp.read(chunk)
+            if not buf:
+                break
+            dst.write(buf)
+            bar.update(len(buf))
 
 
 def _sha256(path: Path) -> str:
