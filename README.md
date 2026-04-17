@@ -16,6 +16,8 @@ pip install "git+ssh://git@github.com/tbai-lab/tbai_mujoco_assets.git"
 
 tbai-mujoco-assets list                        # show which groups are cached
 tbai-mujoco-assets fetch libero                # prefetch (also: dimos, --all, --force)
+tbai-mujoco-assets list-worlds                 # list worlds available locally (--fetch to grab all first)
+tbai-mujoco-assets list-robots                 # list robots from tbai_mujoco_descriptions
 ```
 
 Tarballs are pulled from this repo's GitHub Releases into `$XDG_CACHE_HOME/tbai_mujoco_assets/worlds/` (generally `~/.cache/tbai_mujoco_assets/worlds/`).
