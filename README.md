@@ -12,8 +12,7 @@ MuJoCo world/scene assets for [`tbai_mujoco`](https://github.com/tbai-lab/tbai_m
 ## Install & use
 
 ```bash
-pip install tbai-mujoco-assets                 # code only; data fetched on first use
-pip install "tbai-mujoco-assets[libero]"       # also accepts [dimos], [all]
+pip install "git+ssh://git@github.com/tbai-lab/tbai_mujoco_assets.git"
 
 tbai-mujoco-assets list                        # show which groups are cached
 tbai-mujoco-assets fetch libero                # prefetch (also: dimos, --all, --force)
