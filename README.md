@@ -18,6 +18,8 @@ tbai-mujoco-assets list                        # show which groups are cached
 tbai-mujoco-assets fetch libero                # prefetch (also: dimos, --all, --force)
 tbai-mujoco-assets list-worlds                 # list worlds available locally (--fetch to grab all first)
 tbai-mujoco-assets list-robots                 # list robots from tbai_mujoco_descriptions
+tbai-mujoco-assets print-cache                 # print the cache root path
+tbai-mujoco-assets clear-cache [--yes]         # wipe the cache root
 ```
 
 Tarballs are pulled from this repo's GitHub Releases into `$XDG_CACHE_HOME/tbai_mujoco_assets/worlds/` (generally `~/.cache/tbai_mujoco_assets/worlds/`).

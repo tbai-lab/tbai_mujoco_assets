@@ -7,11 +7,14 @@ Usage
     tbai-mujoco-assets list
     tbai-mujoco-assets list-worlds
     tbai-mujoco-assets list-robots
+    tbai-mujoco-assets print-cache
+    tbai-mujoco-assets clear-cache [--yes]
 """
 
 from __future__ import annotations
 
 import argparse
+import shutil
 import sys
 
 from . import _fetch
@@ -82,6 +85,26 @@ def _cmd_list_robots(_args: argparse.Namespace) -> int:
     return 0
 
 
+def _cmd_print_cache(_args: argparse.Namespace) -> int:
+    print(_fetch.cache_root())
+    return 0
+
+
+def _cmd_clear_cache(args: argparse.Namespace) -> int:
+    root = _fetch.cache_root()
+    if not root.exists():
+        print(f"nothing to clear: {root} does not exist")
+        return 0
+    if not args.yes:
+        reply = input(f"remove {root} and all cached asset groups? [y/N] ")
+        if reply.strip().lower() not in {"y", "yes"}:
+            print("aborted")
+            return 1
+    shutil.rmtree(root)
+    print(f"removed {root}")
+    return 0
+
+
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(prog="tbai-mujoco-assets")
     sub = parser.add_subparsers(dest="cmd", required=True)
@@ -105,6 +128,19 @@ def main(argv: list[str] | None = None) -> int:
         "list-robots", help="list robots available via tbai_mujoco_descriptions"
     )
     p_robots.set_defaults(func=_cmd_list_robots)
+
+    p_print_cache = sub.add_parser(
+        "print-cache", help="print the cache root directory"
+    )
+    p_print_cache.set_defaults(func=_cmd_print_cache)
+
+    p_clear_cache = sub.add_parser(
+        "clear-cache", help="remove the cache root directory and all cached groups"
+    )
+    p_clear_cache.add_argument(
+        "--yes", action="store_true", help="skip the confirmation prompt"
+    )
+    p_clear_cache.set_defaults(func=_cmd_clear_cache)
 
     args = parser.parse_args(argv)
     return args.func(args)
