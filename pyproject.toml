@@ -1,21 +1,13 @@
 [project]
 name = "tbai-mujoco-assets"
 version = "0.1.0"
-description = "MuJoCo world/scene assets (LIBERO, dimos office) for tbai_mujoco"
+description = "mujoco world assets"
 requires-python = ">=3.10"
 dependencies = [
     "pyyaml",
     "mujoco>=3.2",
     "tbai-mujoco-descriptions",
 ]
-
-[project.optional-dependencies]
-# Named extras are accepted for `pip install tbai-mujoco-assets[libero]` etc.
-# They're currently no-op hints: the actual asset download happens lazily on
-# first use, or eagerly via `tbai-mujoco-assets fetch <group>`.
-libero = []
-dimos = []
-all = []
 
 [project.scripts]
 tbai-mujoco-assets = "tbai_mujoco_assets.cli:main"
