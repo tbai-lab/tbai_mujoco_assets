@@ -1,0 +1,10 @@
+__pycache__/
+*.py[cod]
+*.egg-info/
+build/
+dist/
+.DS_Store
+
+# Asset data is not committed — distributed via GitHub Releases and fetched
+# lazily into $XDG_CACHE_HOME. Kept locally for dev-mode short-circuit.
+worlds/

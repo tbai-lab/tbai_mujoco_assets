@@ -1,0 +1,8 @@
+worlds/**/*.png filter=lfs diff=lfs merge=lfs -text
+worlds/**/*.jpg filter=lfs diff=lfs merge=lfs -text
+worlds/**/*.jpeg filter=lfs diff=lfs merge=lfs -text
+worlds/**/*.obj filter=lfs diff=lfs merge=lfs -text
+worlds/**/*.mtl filter=lfs diff=lfs merge=lfs -text
+worlds/**/*.stl filter=lfs diff=lfs merge=lfs -text
+worlds/**/*.msh filter=lfs diff=lfs merge=lfs -text
+worlds/**/*.zip filter=lfs diff=lfs merge=lfs -text
