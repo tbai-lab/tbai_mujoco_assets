@@ -22,6 +22,8 @@ tbai-mujoco-assets list-robots                 # list robots from tbai_mujoco_de
 
 Tarballs are pulled from this repo's GitHub Releases into `$XDG_CACHE_HOME/tbai_mujoco_assets/worlds/` (generally `~/.cache/tbai_mujoco_assets/worlds/`).
 
+Set `$TBAI_MUJOCO_ASSETS_WORLDS_DIR` to point the resolver at a `worlds/` checkout outside the installed package (useful when editing assets from a different working copy).
+
 ## Maintainers: cutting a release
 
 Build reproducible archives, update the sha256 values in `tbai_mujoco_assets/_fetch.py::MANIFEST`, and upload to a GitHub Release whose tag matches `_ASSETS_RELEASE_TAG`:

@@ -6,8 +6,10 @@ everything under ``dimos/`` lives in the ``dimos`` group.
 
 Resolution order for a world path:
 
-1. If a sibling ``worlds/<group>`` directory exists next to the installed
-   package (editable install from a repo clone, or sdist with data), use it.
+1. If ``$TBAI_MUJOCO_ASSETS_WORLDS_DIR`` is set and contains ``<group>``,
+   use that. Otherwise, if a sibling ``worlds/<group>`` directory exists
+   next to the installed package (editable install from a repo clone, or
+   sdist with data), use it.
 2. Otherwise, use ``$XDG_CACHE_HOME/tbai_mujoco_assets/worlds/<group>``;
    download + extract on first miss.
 """
@@ -57,6 +59,20 @@ GROUPS = tuple(MANIFEST.keys())
 
 _PACKAGE_DIR = Path(__file__).resolve().parent
 _REPO_WORLDS_DIR = _PACKAGE_DIR.parent / "worlds"
+_WORLDS_DIR_ENV = "TBAI_MUJOCO_ASSETS_WORLDS_DIR"
+
+
+def _dev_worlds_dir() -> Path:
+    """Preferred ``worlds/`` dir before falling back to the cache.
+
+    Honours ``$TBAI_MUJOCO_ASSETS_WORLDS_DIR`` so developers can point the
+    resolver at a checkout outside the installed package. Falls back to the
+    sibling ``worlds/`` of the installed package.
+    """
+    override = os.environ.get(_WORLDS_DIR_ENV)
+    if override:
+        return Path(override).expanduser()
+    return _REPO_WORLDS_DIR
 
 
 def group_for_world(world: str) -> str:
@@ -77,7 +93,7 @@ def cache_root() -> Path:
 
 def _repo_group_dir(group: str) -> Path | None:
     """Return the in-repo ``worlds/<group>`` dir if it exists (dev mode)."""
-    candidate = _REPO_WORLDS_DIR / group
+    candidate = _dev_worlds_dir() / group
     return candidate if candidate.is_dir() else None
 
 
