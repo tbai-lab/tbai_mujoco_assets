@@ -7,7 +7,7 @@ dependencies = [
     "pyyaml",
     "mujoco>=3.2",
     "tqdm",
-    "tbai-mujoco-descriptions @ git+ssh://git@github.com/tbai-lab/tbai_mujoco_descriptions.git",
+    "tbai-mujoco-descriptions @ git+https://github.com/tbai-lab/tbai_mujoco_descriptions.git",
 ]
 
 [project.scripts]
